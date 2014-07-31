@@ -4,7 +4,7 @@
 		<title>nodi</title>
 		
 		<div data-role="header">
-		<h1><img border="0" src="C:\Users\GWCStudent\Pictures\NodiLogoo.png" alt="Logo, Nodi" style="float:center;display:inline"/></h1>
+		<h1><img border="0" src="https://drive.google.com/file/d/0B67N6H4ROUkCWUc0N0R0Q3dQcDA/edit?usp=sharing" alt="Logo, Nodi" style="float:center;display:inline"/></h1>
 		</div>
 		
 		
@@ -23,6 +23,7 @@
 			function readURL(input,type) {
 				//runs a local file or camera file
 				if(	type=="local"){
+					console.log("hey");
 					//reads the local image file
 					if (input.files && input.files[0]) {
 						var reader = new FileReader();
@@ -38,7 +39,7 @@
 						reader.readAsDataURL(input.files[0]);
 					}
 					//ajax for running the APIs cURL
-					var file=input.files
+					var file=input.files;
 					$.ajax({
 						url: "https://camfind.p.mashape.com/image_requests",
 						type: "POST",
@@ -52,7 +53,7 @@
 							"image_request[latitude]": "35.8714220766008",
 							"image_request[locale]": "en_US",
 							"image_request[longitude]": "14.3583203002251",
-							"image_request[remote_image_url]": "http://ia.media-imdb.com/images/M/MV5BMTM3OTUwMDYwNl5BMl5BanBnXkFtZTcwNTUyNzc3Nw@@._V1_SY317_CR23,0,214,317_AL_.jpg"
+							"image_request[remote_image_url]": file
 
 						},
 						//function for a successful run=actually displays the token in the log
@@ -75,9 +76,10 @@
 				}
 				//will run the api for a remote (internet) image
 				else if (type=="remote"){
-					var file=input.files
+					console.log("sup");
 					console.log($("#imageurl").val());
 					var image=$("#imageurl").val()
+					console.log(image);
 					$.ajax({
 						url: "https://camfind.p.mashape.com/image_requests",
 						type: "POST",
@@ -91,12 +93,15 @@
 							"image_request[latitude]": "35.8714220766008",
 							"image_request[locale]": "en_US",
 							"image_request[longitude]": "14.3583203002251",
-							"image_request[remote_image_url]": "http://ia.media-imdb.com/images/M/MV5BMTM3OTUwMDYwNl5BMl5BanBnXkFtZTcwNTUyNzc3Nw@@._V1_SY317_CR23,0,214,317_AL_.jpg"
+							"image_request[remote_image_url]": image
 
 						},
 						success: function(data) {
 							console.log(data);
 							console.log(data.token+"");
+							var token=data.token+"";
+							console.log(token);
+							findPicture(token);
 
 						},
 						error: function(xhr,status,error){
