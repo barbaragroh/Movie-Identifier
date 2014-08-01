@@ -143,6 +143,12 @@
 		<style>
 		  article, aside, figure, footer, header, hgroup, 
 		  menu, nav, section { display: block; }
+		#fixedbutton {
+			position: fixed;
+			bottom: 0px;
+			right: 0px; 
+			width: 100%
+		}
 		</style>
 	</head>
 	<body>
@@ -156,7 +162,7 @@
 		</div>
 		<!-- how do you link this to the URL <img id="blah" src="" alt="your image" data-position-to="window"/> -->
 		<!--this is the link for the popup for the image options-->
-		<a href="#myPopup" data-role="button" data-rel="popup" data-icon="grid" data-theme="c" data-position-to="window">Upload Image</a>
+		<a href="#myPopup" data-role="button" data-rel="popup" data-icon="grid" data-theme="c" data-position-to="window" id="fixedbutton">Upload Image</a>
 				<!--this is the actual popup-->
 				<div data-role="popup" id="myPopup">
 					<h4 data-position-to="window">Select Image</h4>
