@@ -19,8 +19,14 @@
 		<script>
 			
 			var token;
+			var image;
 			//script for searching images
 			function readURL(input,type) {
+				//image=$("#imageurl").val();
+				//console.log(image);
+				//document.getElementById($('#blah')).src = image;
+				document.getElementById('blah').setAttribute('src',image);
+
 				//runs a local file or camera file
 				if(	type=="local"){
 					console.log("hey");
@@ -79,7 +85,7 @@
 				else if (type=="remote"){
 					console.log("sup");
 					console.log($("#imageurl").val());
-					var image=$("#imageurl").val()
+					//image=$("#imageurl").val();
 					console.log(image);
 					$.ajax({
 						url: "https://camfind.p.mashape.com/image_requests",
@@ -102,7 +108,10 @@
 							console.log(data.token+"");
 							token=data.token+"";
 							console.log(token);
-							window.setInterval("findPicture(token)", 10000);
+							//while(i=0; i<5; i++;){
+								window.setInterval("findPicture(token)", 10000);
+							//}
+							//clearInterval(setInterval("findPicture(token)", 10000));
 							findPicture(token);
 
 						},
@@ -157,8 +166,8 @@
 		<p id="token"></p>
 		
 		<!--this is the displayed image-->
-		<div data-position-to="window">
-			<img id="blah" src="#" alt="your image" data-position-to="window"/>
+		<div data-position-to="window" id="imageDiv">
+			<img id="blah" src=image alt="your image" data-position-to="window"/>
 		</div>
 		<!-- how do you link this to the URL <img id="blah" src="" alt="your image" data-position-to="window"/> -->
 		<!--this is the link for the popup for the image options-->
