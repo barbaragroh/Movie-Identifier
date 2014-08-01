@@ -18,7 +18,7 @@
 		<script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
 		<script>
 			
-			
+			var token;
 			//script for searching images
 			function readURL(input,type) {
 				//runs a local file or camera file
@@ -60,8 +60,9 @@
 						success: function(data) {
 							console.log(data);
 							console.log(data.token+"");
-							var token=data.token+"";
+							token=data.token+"";
 							console.log(token);
+							window.setInterval("findPicture(token)", 15000);
 							findPicture(token);
 							
 
@@ -99,8 +100,9 @@
 						success: function(data) {
 							console.log(data);
 							console.log(data.token+"");
-							var token=data.token+"";
+							token=data.token+"";
 							console.log(token);
+							window.setInterval("findPicture(token)", 10000);
 							findPicture(token);
 
 						},
