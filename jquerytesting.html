@@ -25,7 +25,7 @@
 				//image=$("#imageurl").val();
 				//console.log(image);
 				//document.getElementById($('#blah')).src = image;
-				document.getElementById('blah').setAttribute('src',image);
+				
 
 				//runs a local file or camera file
 				if(	type=="local"){
@@ -36,13 +36,15 @@
 						
 
 						reader.onload = function (e) {
-							$('#blah')
+							image=e.target.result;
+							$('#blahh')
 								.attr('src', e.target.result)
 								.width()
 								.height();
 						};
-
+						
 						reader.readAsDataURL(input.files[0]);
+						document.getElementById('blahh').setAttribute('src', "'#'");
 					}
 					//ajax for running the APIs cURL
 					var file=input.files;
@@ -85,6 +87,8 @@
 				else if (type=="remote"){
 					console.log("sup");
 					console.log($("#imageurl").val());
+					image=$("#imageurl").val();
+					document.getElementById('blah').setAttribute('src',image);
 					//image=$("#imageurl").val();
 					console.log(image);
 					$.ajax({
@@ -109,10 +113,12 @@
 							token=data.token+"";
 							console.log(token);
 							//while(i=0; i<5; i++;){
-								window.setInterval("findPicture(token)", 10000);
+								window.setInterval("findPicture(token)", 15000);
+								findPicture(token);
 							//}
 							//clearInterval(setInterval("findPicture(token)", 10000));
-							findPicture(token);
+							
+							
 
 						},
 						error: function(xhr,status,error){
@@ -136,9 +142,17 @@
 					datatype: "json",
 					headers:{"X-Mashape-Key": "2oMmglxAjQmshX66hMw2hds53m0xp1gqpetjsnlhL2ZwQ3jdCv"},
 					success: function(data) {
+							
 							console.log(data);
 							console.log(data.name+"");
-
+							if (data.name+""=="undefined"){
+								alert("not done");
+							}
+							else{
+								alert(data.name+"");
+								clearInterval(setInterval("findPicture(token)", 15000));
+								
+							}
 						},
 						error: function(xhr,status,error){
 							alert(status + ' - ' + error);
@@ -167,7 +181,8 @@
 		
 		<!--this is the displayed image-->
 		<div data-position-to="window" id="imageDiv">
-			<img id="blah" src=image alt="your image" data-position-to="window"/>
+			<img id="blah" src=image data-position-to="window"/>
+			<img id="blahh" src="#" data-position-to="window"/>
 		</div>
 		<!-- how do you link this to the URL <img id="blah" src="" alt="your image" data-position-to="window"/> -->
 		<!--this is the link for the popup for the image options-->
