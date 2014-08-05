@@ -1,0 +1,230 @@
+ <!DOCTYPE html>
+ <html>
+ 	<head>
+ 		<title>nodi</title>
+ 		
+ 		<div data-role="header">
+ 		<h1><img border="0" src="https://wannabehungergames.files.wordpress.com/2014/07/nodilogoo.png" alt="Logo, Nodi" style="float:center;display:inline"/></h1>
+ 		</div>
+ 		
+ 		
+ 		<meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+ 		<link rel="stylesheet" href="https://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css" />
+ 		<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+ 		<script src="https://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
+ 		<link class="jsbin" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+ 		<script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+ 		<script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+ 		<script>
+ 			
+ 			var token;
+ 			var image;
+			var file;
+ 			//script for searching images
+ 			function readURL(input,type) {
+ 				//image=$("#imageurl").val();
+ 				//console.log(image);
+ 				//document.getElementById($('#RemoteImage')).src = image;
+ 				
+ 
+ 				//runs a local file or camera file
+ 				
+				/*if(	type=="local"){
+ 					console.log("hey");
+ 					//reads the local image file
+ 					if (input.files && input.files[0]) {
+ 						var reader = new FileReader();
+ 						
+
+ 						reader.onload = function (e) {
+ 							file=input.files[0];
+ 							$('#RemoteImageh')
+ 								.attr('src', e.target.result)
+ 								.width()
+ 								.height();
+ 						};
+ 						
+ 						reader.readAsDataURL(input.files[0]);
+						//document.getElementById('RemoteImageh').setAttribute('src', "'#'");
+ 					}
+ 					//ajax for running the APIs cURL
+ 					//var canvas= document.getElementById("myCanvas");
+					//var context=canvas.getContext("2d");
+					//var url=canvas.toDataURL();
+					//document.getElementById("out").value=url;
+					console.log(file);
+ 					$.ajax({
+ 						url: "https://camfind.p.mashape.com/image_requests",
+ 						type: "POST",
+ 						datatype: "jsonp",
+ 						headers: { "X-Mashape-Key": "2oMmglxAjQmshX66hMw2hds53m0xp1gqpetjsnlhL2ZwQ3jdCv" },
+ 						data: {
+ 							"focus[x]": "480",
+ 							"focus[y]": "640",
+ 							"image_request[altitude]": "27.912109375",
+ 							"image_request[language]": "en",
+ 							"image_request[latitude]": "35.8714220766008",
+ 							"image_request[locale]": "en_US",
+ 							"image_request[longitude]": "14.3583203002251",
+ 							"image_request[image]": file 
+ 
+ 						},
+ 						//function for a successful run=actually displays the token in the log
+ 						success: function(data) {
+ 							console.log(data);
+ 							console.log(data.token+"");
+ 							token=data.token+"";
+ 							console.log(token);
+ 							window.setInterval("findPicture(token)", 15000);
+ 							findPicture(token);
+ 							
+ 
+ 						},
+ 						//will tell you if the image doesn't go through
+ 						error: function(xhr,status,error){
+ 							alert(status + ' - ' + error);
+ 						}
+ 					});
+ 					
+ 					
+ 				}*/
+ 				//will run the api for a remote (internet) image
+ 				if (type=="remote"){
+ 					console.log($("#imageurl").val());
+ 					image=$("#imageurl").val();
+ 					document.getElementById('RemoteImage').setAttribute('src',image);
+ 					//image=$("#imageurl").val();
+ 					console.log(image);
+ 					$.ajax({
+ 						url: "https://camfind.p.mashape.com/image_requests",
+ 						type: "POST",
+ 						datatype: "jsonp",
+ 						headers: { "X-Mashape-Key": "2oMmglxAjQmshX66hMw2hds53m0xp1gqpetjsnlhL2ZwQ3jdCv" },
+ 						data: {
+ 							"focus[x]": "480",
+ 							"focus[y]": "640",
+ 							"image_request[altitude]": "27.912109375",
+ 							"image_request[language]": "en",
+ 							"image_request[latitude]": "35.8714220766008",
+ 							"image_request[locale]": "en_US",
+ 							"image_request[longitude]": "14.3583203002251",
+ 							"image_request[remote_image_url]": image
+ 
+ 						},
+ 						success: function(data) {
+ 							console.log(data);
+ 							console.log(data.token+"");
+ 							token=data.token+"";
+ 							console.log(token);
+ 							//while(i=0; i<5; i++;){
+ 								window.setInterval("findPicture(token)", 15000);
+ 								findPicture(token);
+ 							//}
+ 							//clearInterval(setInterval("findPicture(token)", 10000));
+ 							
+ 							
+ 
+ 						},
+ 						error: function(xhr,status,error){
+ 							alert(status + ' - ' + error);
+ 						}
+ 					});
+ 				}
+ 			}
+ 			//not necessary, but I'm afraid to erase it right now
+ 			function imageURL(input){
+ 				console.log($("#imageurl").val());
+ 				var image=$("#imageurl").val()
+ 			}
+ 			//this is the function that calls the API to name the picture
+ 			function findPicture(token){
+ 				var myURL="https://camfind.p.mashape.com/image_responses/"+token;
+ 				console.log(myURL);
+ 				$.ajax({
+ 					url: myURL,
+ 					type: "GET",
+ 					datatype: "json",
+ 					headers:{"X-Mashape-Key": "2oMmglxAjQmshX66hMw2hds53m0xp1gqpetjsnlhL2ZwQ3jdCv"},
+ 					success: function(data) {
+ 							
+ 							console.log(data);
+ 							console.log(data.name+"");
+ 							if (data.name+""=="undefined"){
+								//alert("not done");
+								$("#nameP").text(" "+"Loading...");
+ 							}
+ 							else{
+								//alert(data.name+"");
+								$("#nameP").text(data.name);
+ 								clearInterval(setInterval("findPicture(token)", 15000));
+ 								
+ 							}
+ 						},
+ 						error: function(xhr,status,error){
+ 							alert(status + ' - ' + error);
+ 							}
+ 					});
+ 				
+ 			}
+ 			
+ 		</script>
+ 		<meta charset=utf-8 />
+ 		<style>
+ 		  article, aside, figure, footer, header, hgroup, 
+ 		  menu, nav, section { display: block; }
+ 		#fixedbutton {
+ 			position: fixed;
+ 			bottom: 0px;
+ 			right: 0px; 
+ 			width: 100%
+ 		}
+		.container {
+			width: 400px;
+			height: 210px;
+		}
+
+		/* resize images */
+		.container img {
+			width: 100%;
+			height: auto;
+		}
+ 		</style>
+ 	</head>
+ 	<body>
+ 		<!--don't know what this is-->
+ 		<p id="facts"></p>
+ 		<p id="token"></p>
+		
+		<center><h3 style=font:"calibri">Celebrity Identification</h3></center>
+		<!-- this is the section that displays the name-->
+		<center><em id="nameP"> Choose an image!</em></center>
+		<!--this is the displayed image-->
+		
+		<center><div class="container" data-position-to="window" id="imageDiv">
+ 			<img id="RemoteImage" src=image data-position-to="window"/>
+ 			<!--<canvas id="myCanvas"><img id="RemoteImageh" src="#" data-position-to="window"/></canvas>
+			<p id="out"></p>-->
+		</div></center>
+ 		<!-- how do you link this to the URL <img id="RemoteImage" src="" alt="your image" data-position-to="window"/> -->
+		
+ 		<a href="#myPopup" data-role="button" data-rel="popup" data-icon="grid" data-theme="c" data-position-to="window" id="fixedbutton">Upload Image</a>
+ 				<!--this is the actual popup-->
+ 				<div data-role="popup" id="myPopup">
+ 					<center><h4 data-position-to="window">Select Image</h4></center>
+ 					<!--this is the local file input-->
+ 					<!--<input type='file' accept="image/*;capture=camera" onchange="readURL(this,'local')" />
+ 					<p>OR</p>-->
+ 					<!-- this is the URL input-->
+ 					<fieldset class="ui-grid-a">
+ 						<!-- this is the URL input text box-->
+ 						<div class="ui-block-a"><input id="imageurl" type="text" value="" placeholder="Image URL" ></div>
+ 						<!--this is the OK button to run the URL-->
+ 						<div class="ui-block-b"><input id="Button_Ok" type="button" value="Ok" onclick="readURL(this,'remote')" /></div>	   
+ 					</fieldset>
+ 					
+ 					
+ 				</div>
+ 					
+ 	</body>
+ </html>
