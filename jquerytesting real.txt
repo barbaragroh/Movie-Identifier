@@ -20,7 +20,6 @@
  			
  			var token;
  			var image;
-			var file;
  			//script for searching images
  			function readURL(input,type) {
  				//image=$("#imageurl").val();
@@ -37,7 +36,7 @@
  						
 
  						reader.onload = function (e) {
- 							file=input.files[0];
+ 							image=e.target.result;
  							$('#blahh')
  								.attr('src', e.target.result)
  								.width()
@@ -45,14 +44,11 @@
  						};
  						
  						reader.readAsDataURL(input.files[0]);
+						document.getElementById('blahh').setAttribute('src', "'#'");
 						//document.getElementById('blahh').setAttribute('src', "'#'");
  					}
  					//ajax for running the APIs cURL
- 					//var canvas= document.getElementById("myCanvas");
-					//var context=canvas.getContext("2d");
-					//var url=canvas.toDataURL();
-					//document.getElementById("out").value=url;
-					console.log(file);
+ 					var file=input.files;
  					$.ajax({
  						url: "https://camfind.p.mashape.com/image_requests",
  						type: "POST",
@@ -66,7 +62,7 @@
  							"image_request[latitude]": "35.8714220766008",
  							"image_request[locale]": "en_US",
  							"image_request[longitude]": "14.3583203002251",
- 							"image_request[image]": file 
+ 							"image_request[remote_image_url]": file
  
  						},
  						//function for a successful run=actually displays the token in the log
@@ -151,10 +147,12 @@
  							console.log(data);
  							console.log(data.name+"");
  							if (data.name+""=="undefined"){
+								alert("not done");
 								//alert("not done");
 								$("#nameP").text(" "+"Loading...");
  							}
  							else{
+								alert(data.name+"");
 								//alert(data.name+"");
 								$("#nameP").text(" "+data.name);
  								clearInterval(setInterval("findPicture(token)", 15000));
@@ -190,11 +188,11 @@
 		<!-- this is the section that displays the name-->
 		<center><em id="nameP"> Please Upload Photo!</em></center>
 		<!--this is the displayed image-->
-		
+		<div data-position-to="window" id="imageDiv">
 		<center><div data-position-to="window" id="imageDiv">
  			<img id="blah" src=image data-position-to="window"/>
- 			<!--<canvas id="myCanvas"><img id="blahh" src="#" data-position-to="window"/></canvas>
-			<p id="out"></p>-->
+ 			<img id="blahh" src="#" data-position-to="window"/>
+		</div>
 		</div></center>
  		<!-- how do you link this to the URL <img id="blah" src="" alt="your image" data-position-to="window"/> -->
 		
@@ -203,10 +201,10 @@
  		<a href="#myPopup" data-role="button" data-rel="popup" data-icon="grid" data-theme="c" data-position-to="window" id="fixedbutton">Upload Image</a>
  				<!--this is the actual popup-->
  				<div data-role="popup" id="myPopup">
- 					<center><h4 data-position-to="window">Select Image</h4></center>
+ 					<h4 data-position-to="window">Select Image</h4>
  					<!--this is the local file input-->
- 					<!--<input type='file' accept="image/*;capture=camera" onchange="readURL(this,'local')" />
- 					<p>OR</p>-->
+ 					<input type='file' accept="image/*;capture=camera" onchange="readURL(this,'local')" />
+ 					<p>OR</p>
  					<!-- this is the URL input-->
  					<fieldset class="ui-grid-a">
  						<!-- this is the URL input text box-->
