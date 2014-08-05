@@ -29,7 +29,7 @@
  				
  
  				//runs a local file or camera file
- 				if(	type=="local"){
+ 				/*if(	type=="local"){
  					console.log("hey");
  					//reads the local image file
  					if (input.files && input.files[0]) {
@@ -87,9 +87,9 @@
  					});
  					
  					
- 				}
+ 				}*/
  				//will run the api for a remote (internet) image
- 				else if (type=="remote"){
+ 				if (type=="remote"){
  					console.log("sup");
  					console.log($("#imageurl").val());
  					image=$("#imageurl").val();
@@ -156,7 +156,7 @@
  							}
  							else{
 								//alert(data.name+"");
-								$("#nameP").text(" "+data.name);
+								$("#nameP").text(data.name);
  								clearInterval(setInterval("findPicture(token)", 15000));
  								
  							}
